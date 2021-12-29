@@ -1,0 +1,120 @@
+this.setState({
+    categories: [
+        { ID: 102, NAME: 'Makanan Minang' },
+        { ID: 103, NAME: 'Chinese Food' },
+        { ID: 105, NAME: 'Nasi Goreng' },
+        { ID: 82, NAME: 'Makanan Pedas' },
+        { ID: 83, NAME: 'Makanan Manis' },
+        { ID: 104, NAME: 'Dessert' }
+    ]
+})
+
+this.setState({
+    products: [
+        {id: 1, title: 'Fresh Meat', price: 100000, category: ['Oranges', 'Fresh Meat', 'Fastfood']},
+        {id: 2, title: 'Banana Boat', price: 100000, category: ['Oranges', 'Fresh Meat', 'Fastfood']},
+        {id: 3, title: 'Guava Juice', price: 100000, category: ['Oranges', 'Fresh Meat']},
+        {id: 4, title: 'Watermelon Juice', price: 100000, category: ['Fresh Meat', 'Fastfood']},
+        {id: 5, title: 'Grape Bir', price: 100000, category: ['Vegetables', 'Fresh Meat']},
+        {id: 6, title: 'Burger Beef', price: 100000, category: ['Vegetables', 'Fresh Meat']},
+        {id: 7, title: 'Mango Nut', price: 100000, category: ['Fastfood']},
+        {id: 8, title: 'Apple', price: 100000, category: ['Fastfood']},
+    ]
+})
+
+this.setState({
+            merchants: [
+                {id: 1, name: 'Pizza Hut'},
+                {id: 2, name: 'Richeese Factory'}
+            ]
+        })
+
+        let merchants = [], products = [], categories = []
+
+        axios.get('http://localhost:6969/merchant/available')
+        .then(res => {
+            merchants = res.data
+        })
+
+        axios.get('http://localhost:6969/product/available')
+        .then(res => {
+            products = res.data
+        })
+
+        axios.get('http://localhost:6969/category/all')
+        .then(res => {
+            categories = res.data
+        })
+
+        console.log(merchants)
+
+        this.setState({
+            merchants: merchants
+        })
+        this.setState({
+            products: products
+        })
+        this.setState({
+            categories: categories
+        })
+
+        let categoryList
+            console.log(product.ID)
+            axios.get('http://localhost:6969/category/product/'+product.ID)
+            .then(res => {
+                let c = []
+                res.data.map((category) => {
+                    c = category.NAME.replace(/\s+/g, '-').toLowerCase()
+                })
+                categoryList = c.join(' ')
+            })
+
+            const category = (productId) => {
+            axios.get('http://localhost:6969/category/product/'+productId)
+            .then(res => {
+                let cList = []
+                for(let i=0; i<res.data.length; i++) {
+                    cList.push(res.data[i].NAME.replace(/\s+/g, '-').toLowerCase())
+                }
+                
+                console.log(cList.join(' '))
+                return cList.join(' ')
+            })
+        }
+
+        ${category(product.ID)}
+
+
+
+        axios.get('http://localhost:6969/product/available')
+        .then(res => {
+            let arr
+            arr = res.data
+            for(let i=0; i<arr.length; i++) {
+                arr[i].CATEGORY = []
+                axios.get('http://localhost:6969/category/product/'+arr[i].ID)
+                .then(res2 => {
+                    let arr2, category = [], filter = [], sortby
+                    arr2 = res2.data
+                    for(let j=0; j<arr2.length; j++) {
+                        category.push(arr2[j].NAME)
+                        filter.push(arr2[j].NAME.replace(/\s+/g, '-').toLowerCase())
+                    }
+                    sortby = filter.join(' ')
+                    arr[i].CATEGORY = category
+                    arr[i].SORTBY = sortby
+
+                    this.setState({
+                        products: arr
+                    })
+                })
+            }
+        })
+
+                                            <div className="product__details__quantity">
+                                        <div className="quantity">
+                                            <div className="pro-qty">
+                                                <input type="number" min="1" value={this.state.quantity} onChange={this.handleQuantityChange} />
+                                            </div>
+                                        </div>
+                                    </div>
