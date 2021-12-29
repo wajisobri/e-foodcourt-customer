@@ -25,7 +25,7 @@ export default function ProductsDetail(props) {
 
     useEffect(() => {
         if(localStorage.getItem('isLoggedIn') === null) {
-            
+            window.location.href = '/login'
         }
 
         getProductDetail(id)
